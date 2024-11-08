@@ -67,8 +67,7 @@ with profiler.profile(use_cuda=True, with_stack=True, profile_memory=True) as pr
     getsummaries2("This is a sample support ticket text for summarization.")
 
 ]print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
-prof.export_chrome_trace("profile_trace.json")  # Export trace for Chrome profiling tools
-
+prof.export_chrome_trace("profile_trace.json")  
 ]new_df = df.iloc[:10].copy()
 with profiler.profile(use_cuda=True, profile_memory=True) as prof_df:
     new_df['summary'] = new_df['DESCRIPTION'].apply(getsummaries2)
