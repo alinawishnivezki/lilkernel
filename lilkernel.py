@@ -3,6 +3,7 @@ import triton
 import triton.language as tl
 from transformers import AutoTokenizer, BartForConditionalGeneration
 from torch.autograd import profiler
+import pandas as pd
 
 # load model and tokenizer
 model_name = "facebook/bart-large-cnn"
@@ -66,9 +67,9 @@ def getsummaries2(text, max_length=130, min_length=30, length_penalty=2.0, num_b
 with profiler.profile(use_cuda=True, with_stack=True, profile_memory=True) as prof:
     getsummaries2("This is a sample support ticket text for summarization.")
 
-]print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
+print(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
 prof.export_chrome_trace("profile_trace.json")  
-]new_df = df.iloc[:10].copy()
+new_df = df.iloc[:10].copy()
 with profiler.profile(use_cuda=True, profile_memory=True) as prof_df:
     new_df['summary'] = new_df['DESCRIPTION'].apply(getsummaries2)
 
